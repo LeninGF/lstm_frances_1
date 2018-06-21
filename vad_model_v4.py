@@ -983,6 +983,11 @@ class VADModel(object):
         print("Recall: ", evaluation_update_op__recall)
         print("Precision: ", evaluation_update_op__precision)
 
+        # Creando archivo de texto plano con los resultados:
+        out_path_aux = "resultados/resultados.txt"
+        print("Saving results to {0}".format(out_path_aux))
+
+
         # Save the results in a CSV output file
         out_path = "prediction_linear_soft.csv"
 
@@ -1000,10 +1005,19 @@ class VADModel(object):
       print i, _soft_predictions[i], _hard_predictions[i], Y_test[i]
     '''
 
-        with open(out_path, 'w') as f:
+        with open(out_path, 'a') as f:
             for i in range(len(_hard_predictions)):
                 f.write(str(i) + "\t" + str(_soft_predictions[i]) + "\t" + str(_hard_predictions[i]) + "\t" + str(
                     Y_test[i]) + "\n")
+
+        with open('resultados/resultados.txt', 'a') as f:
+            f.write("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+            f.write("Total number of test examples: {}"+format(len(Y_test))+"\n")
+            f.write("Accuracy: "+str(evaluation_accuracy)+'\n')
+            f.write("Recall: "+str(evaluation_update_op__recall)+'\n')
+            f.write("Precision: "+str(evaluation_update_op__precision)+'\n')
+            f.write("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+        f.closed
 
         return evaluation_accuracy, evaluation_update_op__recall, evaluation_update_op__precision
 

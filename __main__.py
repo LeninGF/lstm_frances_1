@@ -65,8 +65,15 @@ def main():
 
 	X_chime = []
 
+
+	input_X_train = input("Enter X_Train Name:  ")
+	input_Y_train = input("Enter Y_Train Name:  ")
+	input_X_test = input("Enter X_Test Name:  ")
+	input_Y_test = input("Enter Y_Test Name:  ")
+
 	# with open('dataset/X_CHIME_dummy_withhot.csv', 'r') as f:
-	with open('data/train/0.040-training-X.csv', 'r') as f:
+	#with open('data/train/0.040-training-X.csv', 'r') as f:
+	with open('data/train/' + input_X_train + '.csv', 'r') as f:
 		reader = csv.reader(f)
 		# next(reader, None)  # skip the headers
 		data = list(reader)
@@ -77,7 +84,8 @@ def main():
 	Y_chime = []
 
 	# with open('dataset/Y_CHIME_dummy_withhot.csv', 'r') as f:
-	with open('data/train/0.040-training-Y.csv', 'r') as f:
+	#with open('data/train/0.040-training-Y.csv', 'r') as f:
+	with open('data/train/' + input_Y_train + '.csv', 'r') as f:
 		reader = csv.reader(f)
 		# next(reader, None)  # skip the headers
 		data = list(reader)
@@ -94,7 +102,8 @@ def main():
 	X_transcript = []
 
 	# with open('dataset/X_Transcript_withhot.csv', 'r') as f:
-	with open('data/test/0.040-testing-X.csv', 'r') as f:
+	#with open('data/test/0.040-testing-X.csv', 'r') as f:
+	with open('data/test/' + input_X_test + '.csv', 'r') as f:
 		reader = csv.reader(f)
 		# next(reader, None)  # skip the headers
 		data = list(reader)
@@ -105,7 +114,8 @@ def main():
 	Y_transcript = []
 
 	# with open('dataset/Y_Transcript_withhot.csv', 'r') as f:
-	with open('data/test/0.040-testing-Y.csv', 'r') as f:
+	#with open('data/test/0.040-testing-Y.csv', 'r') as f:
+	with open('data/test/' + input_Y_test + '.csv', 'r') as f:
 		reader = csv.reader(f)
 		# next(reader, None)  # skip the headers
 		data = list(reader)
