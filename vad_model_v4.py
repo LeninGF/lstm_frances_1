@@ -905,6 +905,7 @@ class VADModel(object):
                  session,
                  X_test,
                  Y_test,
+                 arg,
                  allow_soft_placement=True,
                  log_device_placement=False):
         """ Evaluating the network
@@ -984,7 +985,7 @@ class VADModel(object):
         print("Precision: ", evaluation_update_op__precision)
 
         # Creando archivo de texto plano con los resultados:
-        out_path_aux = "resultados/resultados.txt"
+        out_path_aux = "resultados/resultados"+arg[1]+".txt"
         print("Saving results to {0}".format(out_path_aux))
 
 
@@ -1005,12 +1006,12 @@ class VADModel(object):
       print i, _soft_predictions[i], _hard_predictions[i], Y_test[i]
     '''
 
-        with open(out_path, 'a') as f:
+        with open(out_path, 'w') as f:
             for i in range(len(_hard_predictions)):
                 f.write(str(i) + "\t" + str(_soft_predictions[i]) + "\t" + str(_hard_predictions[i]) + "\t" + str(
                     Y_test[i]) + "\n")
 
-        with open('resultados/resultados.txt', 'a') as f:
+        with open('resultados/resultados'+arg[1]+'.txt', 'a') as f:
             f.write("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
             f.write("Total number of test examples: {}"+format(len(Y_test))+"\n")
             f.write("Accuracy: "+str(evaluation_accuracy)+'\n')

@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 import time
 import logging
+import sys
 
 from datetime import timedelta
 from vad_model_v4 import VADModel
@@ -34,7 +35,7 @@ def evaluate_model():
 	with tf.Graph().as_default():
 		with tf.Session() as session:
 			model = VADModel.restore(session, param_dir)
-			accuracy, perplexity = model.evaluate(session, X_test, Y_test)
+			accuracy, perplexity = model.evaluate(session, X_test, Y_test, argv)
 
 	print("Perplexity=", "{:.4f}".format(evaluation_perplexity),
 		  ", Accuracy= ", "{:.5f}".format(evaluation_accuracy))
@@ -58,18 +59,21 @@ def configure_logging(log_filename):
 	return logger
 
 
-def main():
+def main(argv):
 	print("Shall we start ??...")
 
 	print("\nReading CHIME dataset ...")
 
 	X_chime = []
 
-
-	input_X_train = input("Enter X_Train Name:  ")
-	input_Y_train = input("Enter Y_Train Name:  ")
-	input_X_test = input("Enter X_Test Name:  ")
-	input_Y_test = input("Enter Y_Test Name:  ")
+	input_X_train = argv[1]
+	input_Y_train = argv[2]
+	input_X_test = argv[3]
+	input_Y_test = argv[4]
+	print('X_train is:', input_X_train)
+	print('Y_train is:', input_Y_train)
+	print('X_test is:', input_X_test)
+	print('Y_test is:', input_Y_test)
 
 	# with open('dataset/X_CHIME_dummy_withhot.csv', 'r') as f:
 	#with open('data/train/0.040-training-X.csv', 'r') as f:
@@ -187,11 +191,11 @@ def main():
 	with tf.Graph().as_default():
 		with tf.Session() as session:
 			model = VADModel.restore(session, param_dir)
-			evaluation_accuracy, _, _ = model.evaluate(session, X_test, Y_test)
+			evaluation_accuracy, _, _ = model.evaluate(session, X_test, Y_test, argv)
 
 	print("Accuracy= ", "{:.5f}".format(evaluation_accuracy))
 
 
 if __name__ == "__main__":
 	# logger = configure_logging()
-	main()
+	main(sys.argv)
