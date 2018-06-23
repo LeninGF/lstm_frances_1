@@ -1,7 +1,7 @@
 {
-	"training_epochs" : 200,
+	"training_epochs" : 50,
 
-    "learning_rate" : 0.02,
+    "learning_rate" : 0.005,
     "momentum" : 0.9,
     "model" : "lstm",
     "input_keep_probability" : 1.0,

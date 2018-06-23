@@ -13,6 +13,7 @@ import yaml
 import logging
 import seaborn as sns
 
+from sklearn.metrics import confusion_matrix
 from datetime import datetime
 # from tensorflow.contrib.rnn.python.ops.core_rnn_cell import BasicLSTMCell, DropoutWrapper, MultiRNNCell, GRUCell
 from tensorflow.python.ops.rnn_cell import BasicLSTMCell, DropoutWrapper, MultiRNNCell, GRUCell
@@ -983,6 +984,24 @@ class VADModel(object):
         print("Accuracy: ", evaluation_accuracy)
         print("Recall: ", evaluation_update_op__recall)
         print("Precision: ", evaluation_update_op__precision)
+        # Calculo de matriz de confusion
+        temp_data_y_test = np.reshape(data_y_test, [-1])
+        temp_label_predictions = np.reshape(_label_predictions, [-1])
+        cnf_matrix = confusion_matrix(temp_data_y_test, temp_label_predictions)
+        tp = cnf_matrix[0, 0]
+        fn = cnf_matrix[0, 1]
+        fp = cnf_matrix[1, 0]
+        tn = cnf_matrix[1, 1]
+
+        print("Confusion Matrix : ")
+        print(cnf_matrix)
+        print('true_positives: ', tp)
+        print('false_negative: ', fn)
+        print('false_positives: ', fp)
+        print('true_negatives: ', tn)
+
+
+
 
         # Creando archivo de texto plano con los resultados:
         out_path_aux = "resultados/resultados"+arg[1]+".txt"
@@ -997,10 +1016,11 @@ class VADModel(object):
         _hard_predictions = np.reshape(_label_predictions, [-1])
         _soft_predictions = np.reshape(_all_predictions, [-1])
 
-        print(_hard_predictions.shape)
-        print(_soft_predictions.shape)
+        #print(_hard_predictions.shape)
+        #print(_soft_predictions.shape)
 
         Y_test = np.reshape(Y_test, [-1])
+
         '''
     for i in range(len(_hard_predictions)):
       print i, _soft_predictions[i], _hard_predictions[i], Y_test[i]
@@ -1017,6 +1037,11 @@ class VADModel(object):
             f.write("Accuracy: "+str(evaluation_accuracy)+'\n')
             f.write("Recall: "+str(evaluation_update_op__recall)+'\n')
             f.write("Precision: "+str(evaluation_update_op__precision)+'\n')
+            f.write('true_positives: '+ str(tp)+'\n')
+            f.write('false_negative: '+ str(fn)+'\n')
+            f.write('false_positives: '+ str(fp)+'\n')
+            f.write('true_negatives: '+ str(tn)+'\n')
+
             f.write("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
         f.closed
 
