@@ -1026,7 +1026,7 @@ class VADModel(object):
       print i, _soft_predictions[i], _hard_predictions[i], Y_test[i]
     '''
 
-        with open(out_path, 'w') as f:
+        with open(out_path, 'a') as f:
             for i in range(len(_hard_predictions)):
                 f.write(str(i) + "\t" + str(_soft_predictions[i]) + "\t" + str(_hard_predictions[i]) + "\t" + str(
                     Y_test[i]) + "\n")
